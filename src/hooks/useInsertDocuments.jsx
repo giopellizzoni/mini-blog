@@ -1,6 +1,7 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import { db } from "../firebase/config";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { useIsMounted } from "./useIsMounted";
 
 const initialState = {
   loading: null,
@@ -23,11 +24,10 @@ const insertReducer = (state, action) => {
 export const useInsertDocument = (docCollection) => {
   const [response, dispatch] = useReducer(insertReducer, initialState);
 
-  // const [cancelled, setCancelled] = useState(false);
-  let cancelled = false;
-
+  const isMounted = useIsMounted();
+  
   const checkCancelledBeforeDispatch = (action) => {
-    if (!cancelled) {
+    if (isMounted.current) {
       dispatch(action);
     }
   };
@@ -56,14 +56,6 @@ export const useInsertDocument = (docCollection) => {
       });
     }
   };
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    cancelled = false;
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   return { insertDocument, response };
 };
