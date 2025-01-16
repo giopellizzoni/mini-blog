@@ -1,17 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCjT2FcPWMVIR6_Ko2mAJbzuQe41U8M7K4",
-  authDomain: "mini-blog-gp.firebaseapp.com",
-  projectId: "mini-blog-gp",
-  storageBucket: "mini-blog-gp.firebasestorage.app",
-  messagingSenderId: "799912213545",
-  appId: "1:799912213545:web:cb3b330de0f98f752af038",
+  apiKey: process.env.MINIBLOG_API_KEY,
+  authDomain: process.env.MINIBLOG_AUTH_DOMAIN,
+  projectId: process.env.MINIBLOG_PROJECT_ID,
+  storageBucket: process.env.MINIBLOG_STORAGE_BUCKET,
+  messagingSenderId: process.env.MINIBLOG_MESSAGE_SENDER_ID,
+  appId: process.env.MINIBLOG_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app)
+const db = getFirestore(app);
 
-export { db }
+export { db };
